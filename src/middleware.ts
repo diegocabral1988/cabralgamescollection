@@ -9,7 +9,9 @@ export async function middleware(req: NextRequest) {
   const password = process.env.SITE_PASSWORD;
   if (!password) return NextResponse.next();
   const { pathname } = req.nextUrl;
-  if (pathname === "/login" || pathname === "/api/login") return NextResponse.next();
+  if (pathname === "/login" || pathname === "/api/login" || pathname === "/api/health") {
+    return NextResponse.next();
+  }
   const token = req.cookies.get("cgc_auth")?.value;
   if (token && token === (await sha256(password))) return NextResponse.next();
   if (pathname.startsWith("/api/")) {
