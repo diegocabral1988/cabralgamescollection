@@ -1,6 +1,7 @@
 "use client";
 
 import { CollectionState, DB, totalAccessories } from "@/data/consoles";
+import { WALL } from "@/data/projects";
 import { lotsTotal, ownedSet, pad } from "@/lib/collection";
 
 // A coleção como um jogo: fases da missão e progresso geral.
@@ -14,7 +15,11 @@ export default function QuestLog({ state }: { state: CollectionState }) {
     { label: "Cotar o acervo", done: quoted, total: DB.length },
     { label: "Adquirir consoles", done: consolesOwned, total: DB.length },
     { label: "Completar acessórios", done: accOwned, total: totalAccessories },
-    { label: "Ligar tudo nas TVs", done: 0, total: DB.length },
+    {
+      label: "Montar a parede PlayStation",
+      done: WALL.filter((w) => lotsTotal(state, w.consoleId) > 0).length,
+      total: WALL.length,
+    },
   ];
 
   return (

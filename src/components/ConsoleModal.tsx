@@ -62,6 +62,45 @@ export default function ConsoleModal({
         </p>
         <p className="lore">{c.desc}</p>
 
+        {(c.gen || c.units || c.games || c.tip || c.wall) && (
+          <div className="dossier">
+            <div className="d-grid">
+              {c.gen && (
+                <div>
+                  <span className="k">Geração</span>
+                  <span className="v">{c.gen}ª</span>
+                </div>
+              )}
+              {c.units && (
+                <div>
+                  <span className="k">Unidades vendidas</span>
+                  <span className="v">{c.units}</span>
+                </div>
+              )}
+              <div>
+                <span className="k">Acessórios mapeados</span>
+                <span className="v">{c.acc.length}</span>
+              </div>
+              {c.wall && (
+                <div>
+                  <span className="k">Parede PlayStation</span>
+                  <span className="v acc">Painel {c.wall}</span>
+                </div>
+              )}
+            </div>
+            {c.games && c.games.length > 0 && (
+              <p className="d-games">
+                <span className="k">Jogos-chave</span> {c.games.join(" · ")}
+              </p>
+            )}
+            {c.tip && (
+              <p className="d-tip">
+                <span className="k">Dica de compra</span> {c.tip}
+              </p>
+            )}
+          </div>
+        )}
+
         <div className="msec">
           <span className="ml">
             <span className="n">01</span> Cotação de referência
