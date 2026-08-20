@@ -12,6 +12,21 @@ import ConsoleCard from "./ConsoleCard";
 import ConsoleModal from "./ConsoleModal";
 import ProjectBoard from "./ProjectBoard";
 
+// Toda gravação passa por aqui: se o servidor falhar, avisa e desfaz o optimistic update.
+async function send(url: string, init: RequestInit) {
+  let res: Response;
+  try {
+    res = await fetch(url, init);
+  } catch {
+    alert("Sem conexão com o servidor — a alteração NÃO foi salva.");
+    throw new Error("network error");
+  }
+  if (!res.ok) {
+    alert(`Falha ao salvar (HTTP ${res.status}) — a alteração NÃO foi salva. Verifique /api/health.`);
+    throw new Error(`save failed: ${res.status}`);
+  }
+}
+
 const fetcher = (url: string) =>
   fetch(url).then((r) => {
     if (!r.ok) throw new Error("Falha ao carregar dados");
@@ -94,14 +109,14 @@ export default function CollectionApp() {
       };
       mutate(
         async () => {
-          await fetch("/api/quotes", {
+          await send("/api/quotes", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ console_id, quote, notes }),
           });
           return undefined;
         },
-        { optimisticData: optimistic, populateCache: false, revalidate: true }
+        { optimisticData: optimistic, populateCache: false, revalidate: true, rollbackOnError: true }
       );
     },
     [state, mutate]
@@ -124,14 +139,14 @@ export default function CollectionApp() {
       };
       mutate(
         async () => {
-          await fetch("/api/purchases", {
+          await send("/api/purchases", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ console_id, items, price, note }),
           });
           return undefined;
         },
-        { optimisticData: optimistic, populateCache: false, revalidate: true }
+        { optimisticData: optimistic, populateCache: false, revalidate: true, rollbackOnError: true }
       );
     },
     [state, mutate]
@@ -145,10 +160,10 @@ export default function CollectionApp() {
       };
       mutate(
         async () => {
-          await fetch(`/api/purchases?id=${id}`, { method: "DELETE" });
+          await send(`/api/purchases?id=${id}`, { method: "DELETE" });
           return undefined;
         },
-        { optimisticData: optimistic, populateCache: false, revalidate: true }
+        { optimisticData: optimistic, populateCache: false, revalidate: true, rollbackOnError: true }
       );
     },
     [state, mutate]
@@ -167,14 +182,14 @@ export default function CollectionApp() {
       };
       mutate(
         async () => {
-          await fetch("/api/accessories", {
+          await send("/api/accessories", {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ console_id, accessory_index, owned }),
           });
           return undefined;
         },
-        { optimisticData: optimistic, populateCache: false, revalidate: true }
+        { optimisticData: optimistic, populateCache: false, revalidate: true, rollbackOnError: true }
       );
     },
     [state, mutate]
