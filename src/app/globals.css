@@ -780,3 +780,21 @@ html.light .bg-symbols { filter: invert(1); opacity: 0.28; }
 /* títulos e números na face de display */
 .brand, .sec-head h2, .q-title, .modal h2, .card h3, .stat .num, .p-info .p-name, .frame h3 { font-family: var(--font-display); }
 .brand { letter-spacing: 0.24em; }
+
+/* ============ Imagem do aparelho no catálogo ============ */
+.shot { margin: 0 0 16px; border: 1px solid var(--border); background: var(--card2); overflow: hidden; }
+.shot .device { display: block; width: 100%; height: auto; }
+.shot-photo img { display: block; width: 100%; height: auto; object-fit: cover; aspect-ratio: 16 / 9; }
+.shot-modal { margin-bottom: 22px; }
+.shot figcaption { font-size: 10px; letter-spacing: 0.1em; color: var(--muted-foreground); padding: 8px 12px; border-top: 1px solid var(--border); }
+/* desenho do formato: casca, detalhes e telas na cor do fabricante */
+.device .dv-shell { fill: oklch(0.3 0.01 260); stroke: currentColor; stroke-width: 1.5; }
+.device .dv-detail { fill: currentColor; opacity: 0.45; }
+.device .dv-glass { fill: currentColor; opacity: 0.22; }
+.device .device-tag {
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  letter-spacing: 0.16em;
+  fill: var(--muted-foreground);
+}
+html.light .device .dv-shell { fill: oklch(0.88 0.005 260); }

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { CollectionState, GameConsole } from "@/data/consoles";
 import { quoteOf } from "@/lib/collection";
+import DevicePhoto from "./DevicePhoto";
 import PurchaseKit from "./PurchaseKit";
 import AccessoryChecklist from "./AccessoryChecklist";
 
@@ -56,6 +57,7 @@ export default function ConsoleModal({
         <button className="close" onClick={onClose} aria-label="Fechar">
           ×
         </button>
+        <DevicePhoto c={c} size="modal" />
         <h2>{c.name}</h2>
         <p className="m-meta">
           {c.brand} · {c.year} · {c.type} · {c.rarity}

@@ -1,3 +1,5 @@
+import photos from "./photos.json";
+
 export type ConsoleType = "Mesa" | "Portátil" | "Add-on" | "Híbrido";
 
 export interface GameConsole {
@@ -21,6 +23,10 @@ export interface GameConsole {
   wall?: number;
   /** Família/linhagem à qual o modelo pertence (agrupa as variantes). */
   family?: string;
+  /** Caminho da foto do aparelho, em /consoles. Sem foto, o card desenha o formato. */
+  photo?: string;
+  /** Crédito e licença da foto — obrigatório para as imagens do Wikimedia Commons. */
+  photoCredit?: string;
   acc: string[];
 }
 
@@ -143,5 +149,16 @@ export const DB: GameConsole[] = [
   { id: "switcholed", name: "Nintendo Switch OLED", brand: "Nintendo", year: 2021, type: "Híbrido", rarity: "Comum", desc: "Tela OLED de 7\", suporte melhor e dock com porta de rede.", family: "Nintendo Switch", gen: 8, units: "incluído na linha", games: ["Zelda: Tears of the Kingdom", "Metroid Dread"], tip: "A melhor tela da família — o salto de imagem é grande em relação ao modelo original.", acc: ["Console OLED", "Dock com porta LAN", "Joy-Con (par)", "Pro Controller", "Fonte USB-C", "Cartão microSD", "Caixa e manual"] },
   { id: "switch2", name: "Nintendo Switch 2", brand: "Nintendo", year: 2025, type: "Híbrido", rarity: "Atual", desc: "Sucessor direto, com tela maior, Joy-Con magnéticos e compatibilidade com o acervo Switch.", family: "Nintendo Switch", gen: 9, units: "geração atual", games: ["Mario Kart World", "Donkey Kong Bananza"], tip: "Roda a maior parte da biblioteca do Switch — o acervo antigo não vira peça morta.", acc: ["Console", "Dock original", "Joy-Con 2 (par)", "Pro Controller", "Fonte USB-C", "Cartão microSD Express", "Caixa e manual"] },
 ];
+
+// Fotos baixadas por scripts/fetch-photos.ts entram aqui automaticamente:
+// cada entrada de photos.json preenche `photo` e `photoCredit` do console.
+const PHOTOS = photos as Record<string, { photo: string; photoCredit: string }>;
+DB.forEach((c) => {
+  const p = PHOTOS[c.id];
+  if (p) {
+    c.photo = p.photo;
+    c.photoCredit = p.photoCredit;
+  }
+});
 
 export const totalAccessories = DB.reduce((s, c) => s + c.acc.length, 0);
