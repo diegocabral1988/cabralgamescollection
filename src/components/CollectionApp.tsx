@@ -11,7 +11,8 @@ import ConsoleCard from "./ConsoleCard";
 import ConsoleModal from "./ConsoleModal";
 import ProjectBoard from "./ProjectBoard";
 
-// Toda gravação passa por aqui: se o servidor falhar, avisa e desfaz o optimistic update.
+// Toda gravação passa por aqui: se o servidor falhar, mostra o motivo que ele
+// enviou e desfaz o optimistic update.
 async function send(url: string, init: RequestInit) {
   let res: Response;
   try {
@@ -21,7 +22,12 @@ async function send(url: string, init: RequestInit) {
     throw new Error("network error");
   }
   if (!res.ok) {
-    alert(`Falha ao salvar (HTTP ${res.status}) — a alteração NÃO foi salva. Verifique /api/health.`);
+    let motivo = `HTTP ${res.status}`;
+    try {
+      const body = await res.json();
+      if (body?.error) motivo = String(body.error);
+    } catch {}
+    alert(`A alteração NÃO foi salva.\n\n${motivo}`);
     throw new Error(`save failed: ${res.status}`);
   }
 }
