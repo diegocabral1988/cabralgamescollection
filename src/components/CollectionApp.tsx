@@ -26,6 +26,10 @@ async function send(url: string, init: RequestInit) {
   }
 }
 
+// Carimbo do build: mostra no rodapé qual versão está no ar. Na Vercel vem o
+// commit publicado; em desenvolvimento, "local".
+const BUILD_ID = (process.env.NEXT_PUBLIC_BUILD_ID || "local").slice(0, 7);
+
 const fetcher = (url: string) =>
   fetch(url).then((r) => {
     if (!r.ok) throw new Error("Falha ao carregar dados");
@@ -266,7 +270,9 @@ export default function CollectionApp() {
 
       <footer className="site">
         <span>Score: Cabral_Legacy</span>
-        <span>System: Arcadia_G_3.0 — Sera</span>
+        <span className="build mono">
+          {DB.length} consoles · build {BUILD_ID}
+        </span>
       </footer>
     </main>
   );

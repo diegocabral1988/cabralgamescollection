@@ -798,3 +798,4 @@ html.light .bg-symbols { filter: invert(1); opacity: 0.28; }
   fill: var(--muted-foreground);
 }
 html.light .device .dv-shell { fill: oklch(0.88 0.005 260); }
+footer.site .build { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; }
