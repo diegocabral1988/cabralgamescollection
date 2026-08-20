@@ -619,3 +619,57 @@ div.wall {
 /* marca do topo no mesmo desenho do logo recortado no MDF */
 .brand { text-shadow: 0 2px 0 oklch(0 0 0 / 25%); }
 .topbar .sys .dot { background: var(--accent); }
+
+/* ============ Quadros shadow box: diagrama explodido com legendas ============ */
+.f-art { margin: 16px 0 4px; background: oklch(0 0 0 / 25%); padding: 10px; }
+.sbox { display: block; width: 100%; height: auto; }
+.sb-frame { fill: oklch(0.97 0.004 120); }
+.sbox-dark .sb-frame { fill: oklch(0.16 0.008 260); }
+.sb-board { fill: oklch(0.98 0.003 250); }
+/* marca d'água de símbolos PlayStation */
+.sb-symbols { fill: oklch(0.86 0.01 250); stroke: oklch(0.86 0.01 250); stroke-width: 1.4; }
+.sb-symbols circle,
+.sb-symbols polygon,
+.sb-symbols rect { fill: none; stroke: oklch(0.88 0.01 250); stroke-width: 1.4; }
+.sb-title {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  fill: oklch(0.25 0.06 265);
+}
+.sb-title-sm { font-size: 11px; letter-spacing: 0.3em; }
+/* peças */
+.sb-fill { fill: oklch(0.3 0.01 260); }
+.sb-fill-dark { fill: oklch(0.42 0.01 260); }
+.sb-shell .sb-fill { fill: oklch(0.78 0.008 100); }
+.sb-shell .sb-fill-dark { fill: oklch(0.62 0.008 100); }
+.sb-board .sb-fill,
+.sb-part.sb-board .sb-fill { fill: oklch(0.55 0.13 150); }
+.sb-rubber .sb-fill { fill: oklch(0.66 0.012 260); }
+.sb-metal .sb-fill { fill: oklch(0.74 0.008 240); }
+.sb-screen { fill: oklch(0.72 0.05 150); }
+.sb-touch { fill: oklch(0.5 0.01 260); }
+/* linhas de chamada e legendas técnicas */
+.sb-lead { fill: none; stroke: oklch(0.42 0.06 265); stroke-width: 1; }
+.sb-label {
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.12em;
+  fill: oklch(0.3 0.05 265);
+}
+
+/* ============ Tom gamer: símbolos PlayStation ao fundo do site ============ */
+.bg-symbols {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.32;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.055' stroke-width='2'%3E%3Ccircle cx='34' cy='34' r='11'/%3E%3Cpath d='M110 23l11 20h-22z'/%3E%3Crect x='24' y='120' width='20' height='20'/%3E%3Cpath d='M104 118l20 20m0-20l-20 20'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 192px 192px;
+  animation: symbol-drift 90s linear infinite;
+}
+html.light .bg-symbols { filter: invert(1); opacity: 0.28; }
+@keyframes symbol-drift { to { background-position: 192px 192px; } }
+@media (prefers-reduced-motion: reduce) { .bg-symbols { animation: none; } }

@@ -24,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <div className="bg-grid" aria-hidden="true" />
+        <div className="bg-symbols" aria-hidden="true" />
         <div className="bg-scan" aria-hidden="true" />
         {children}
       </body>
