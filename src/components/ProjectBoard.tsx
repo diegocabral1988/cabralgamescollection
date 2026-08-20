@@ -5,6 +5,7 @@ import { CollectionState, DB } from "@/data/consoles";
 import { FRAMES, WALL, WALL_MATERIALS, framesBudgetLabel } from "@/data/projects";
 import { lotsTotal, pad } from "@/lib/collection";
 import { ConsoleArt, PadArt, PsMonogram, PsWordmark } from "./PsPanelArt";
+import ShadowBoxArt from "./ShadowBoxArt";
 
 const FRAME_KEY = "cgc_frame_";
 
@@ -131,6 +132,9 @@ export default function ProjectBoard({
                 <input type="checkbox" checked={!!done[f.id]} onChange={() => toggle(f.id)} />
                 <span>Peça comprada</span>
               </label>
+            </div>
+            <div className="f-art">
+              <ShadowBoxArt id={f.id} />
             </div>
             <p className="f-sub">{f.subtitle}</p>
             <div className="rows">
