@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CollectionState, GameConsole } from "@/data/consoles";
+import { CollectionState, DB, GameConsole } from "@/data/consoles";
 import { accProgress, fmt, lotsTotal, pad, quoteOf } from "@/lib/collection";
 
 export default function ConsoleCard({
@@ -42,6 +42,7 @@ export default function ConsoleCard({
   const invested = lotsTotal(state, c.id);
   const quote = Number(quoteOf(state, c.id)?.quote) || 0;
   const progress = accProgress(state, c);
+  const siblings = c.family ? DB.filter((x) => x.family === c.family).length : 0;
 
   return (
     <button
@@ -60,6 +61,7 @@ export default function ConsoleCard({
         <span className="tag">{c.type}</span>
         <span className="tag">{c.rarity}</span>
         {c.gen && <span className="tag">{c.gen}ª geração</span>}
+        {siblings > 1 && <span className="tag fam">{c.family}</span>}
         {c.fav && <span className="tag fav">Favorito</span>}
         {c.wall && <span className="tag panelmark">Parede PS{c.wall > 1 ? c.wall : ""}</span>}
         {invested > 0 ? (

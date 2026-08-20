@@ -673,3 +673,4 @@ div.wall {
 html.light .bg-symbols { filter: invert(1); opacity: 0.28; }
 @keyframes symbol-drift { to { background-position: 192px 192px; } }
 @media (prefers-reduced-motion: reduce) { .bg-symbols { animation: none; } }
+.tag.fam { border-color: var(--input); color: var(--muted-foreground); }
