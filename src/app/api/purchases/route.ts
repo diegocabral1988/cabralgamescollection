@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { sql } from "@/lib/db";
+import { withDb } from "@/lib/db";
 
 // Registrar compra por kit: cria o lote e marca os itens como possuídos.
 export async function POST(req: Request) {
@@ -8,18 +8,19 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
   }
   const idx = items.map(Number).filter((n) => Number.isInteger(n) && n >= 0);
-  const db = sql();
-  const [row] = await db`
-    INSERT INTO purchases (console_id, items, price, note)
-    VALUES (${console_id}, ${idx}, ${Number(price)}, ${String(note ?? "")})
-    RETURNING id, console_id, items, price::float8 AS price, note, purchased_at`;
-  for (const i of idx) {
-    await db`
-      INSERT INTO accessory_status (console_id, accessory_index, owned)
-      VALUES (${console_id}, ${i}, true)
-      ON CONFLICT (console_id, accessory_index) DO UPDATE SET owned = true`;
-  }
-  return NextResponse.json(row);
+  return withDb(async (db) => {
+    const [row] = await db`
+      INSERT INTO purchases (console_id, items, price, note)
+      VALUES (${console_id}, ${idx}, ${Number(price)}, ${String(note ?? "")})
+      RETURNING id, console_id, items, price::float8 AS price, note, purchased_at`;
+    for (const i of idx) {
+      await db`
+        INSERT INTO accessory_status (console_id, accessory_index, owned)
+        VALUES (${console_id}, ${i}, true)
+        ON CONFLICT (console_id, accessory_index) DO UPDATE SET owned = true`;
+    }
+    return row;
+  });
 }
 
 export async function DELETE(req: Request) {
@@ -28,7 +29,8 @@ export async function DELETE(req: Request) {
   if (!Number.isInteger(id)) {
     return NextResponse.json({ error: "id inválido" }, { status: 400 });
   }
-  const db = sql();
-  await db`DELETE FROM purchases WHERE id = ${id}`;
-  return NextResponse.json({ ok: true });
+  return withDb(async (db) => {
+    await db`DELETE FROM purchases WHERE id = ${id}`;
+    return { ok: true };
+  });
 }
