@@ -59,13 +59,20 @@ export default function ConsoleCard({
       <div className="tags">
         <span className="tag">{c.type}</span>
         <span className="tag">{c.rarity}</span>
+        {c.gen && <span className="tag">{c.gen}ª geração</span>}
         {c.fav && <span className="tag fav">Favorito</span>}
+        {c.wall && <span className="tag wall">Parede PS{c.wall > 1 ? c.wall : ""}</span>}
         {invested > 0 ? (
           <span className="tag own">Adquirido</span>
         ) : quote > 0 ? (
           <span className="tag quo">Cotado</span>
         ) : null}
       </div>
+      {c.games && c.games.length > 0 && (
+        <p className="games mono">
+          <b>Jogos-chave</b> {c.games.join(" · ")}
+        </p>
+      )}
       <div className="rows">
         {quote > 0 && (
           <div className="info-row">
@@ -77,6 +84,12 @@ export default function ConsoleCard({
           <div className="info-row">
             <span className="k">Investido</span>
             <span className="v ok">R$ {fmt(invested)}</span>
+          </div>
+        )}
+        {c.units && (
+          <div className="info-row">
+            <span className="k">Unidades vendidas</span>
+            <span className="v">{c.units}</span>
           </div>
         )}
         <div className="info-row">

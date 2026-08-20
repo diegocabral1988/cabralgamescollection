@@ -52,6 +52,8 @@ export default function Filters({
         <option value="1980">Anos 1980</option>
         <option value="1990">Anos 1990</option>
         <option value="2000">Anos 2000</option>
+        <option value="2010">Anos 2010</option>
+        <option value="2020">Anos 2020</option>
       </select>
       <select aria-label="Tipo" value={filters.type} onChange={set("type")}>
         <option value="all">Todos os tipos</option>
@@ -66,6 +68,7 @@ export default function Filters({
         <option value="quoted">Cotados</option>
         <option value="none">Sem cotação</option>
         <option value="fav">Favoritos do Cabral</option>
+        <option value="wall">Projeto parede PlayStation</option>
       </select>
     </div>
   );

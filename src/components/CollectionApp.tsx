@@ -10,6 +10,7 @@ import StatTiles from "./StatTiles";
 import Filters, { FilterState, initialFilters } from "./Filters";
 import ConsoleCard from "./ConsoleCard";
 import ConsoleModal from "./ConsoleModal";
+import ProjectBoard from "./ProjectBoard";
 
 const fetcher = (url: string) =>
   fetch(url).then((r) => {
@@ -192,6 +193,7 @@ export default function CollectionApp() {
       if (filters.status === "quoted" && !(quote > 0 && invested <= 0)) return false;
       if (filters.status === "none" && (quote > 0 || invested > 0)) return false;
       if (filters.status === "fav" && !c.fav) return false;
+      if (filters.status === "wall" && !c.wall) return false;
       return true;
     });
   }, [filters, state]);
@@ -215,6 +217,8 @@ export default function CollectionApp() {
           </button>
         </div>
       )}
+
+      <ProjectBoard state={state} onOpen={setOpenId} />
 
       <Filters filters={filters} onChange={setFilters} />
 
