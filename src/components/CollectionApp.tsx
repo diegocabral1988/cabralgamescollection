@@ -5,8 +5,7 @@ import useSWR from "swr";
 import { CollectionState, DB } from "@/data/consoles";
 import { emptyState, lotsTotal, pad, quoteOf } from "@/lib/collection";
 import Header from "./Header";
-import QuestLog from "./QuestLog";
-import StatTiles from "./StatTiles";
+import Overview from "./Overview";
 import Filters, { FilterState, initialFilters } from "./Filters";
 import ConsoleCard from "./ConsoleCard";
 import ConsoleModal from "./ConsoleModal";
@@ -219,8 +218,7 @@ export default function CollectionApp() {
   return (
     <main className="shell">
       <Header />
-      <QuestLog state={state} />
-      <StatTiles state={state} />
+      <Overview state={state} />
 
       {hasBackup && (
         <div className="import-banner">
