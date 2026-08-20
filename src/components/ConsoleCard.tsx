@@ -61,7 +61,7 @@ export default function ConsoleCard({
         <span className="tag">{c.rarity}</span>
         {c.gen && <span className="tag">{c.gen}ª geração</span>}
         {c.fav && <span className="tag fav">Favorito</span>}
-        {c.wall && <span className="tag wall">Parede PS{c.wall > 1 ? c.wall : ""}</span>}
+        {c.wall && <span className="tag panelmark">Parede PS{c.wall > 1 ? c.wall : ""}</span>}
         {invested > 0 ? (
           <span className="tag own">Adquirido</span>
         ) : quote > 0 ? (

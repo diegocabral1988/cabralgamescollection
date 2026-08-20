@@ -2,37 +2,46 @@
 
 /* ============ DESIGN SYSTEM "SERA" — tokens (dark padrão, toggle light) ============ */
 :root {
-  --background: oklch(0.145 0 0);
+  --background: oklch(0.16 0.018 152);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card2: oklch(0.24 0 0);
+  --card: oklch(0.215 0.016 152);
+  --card2: oklch(0.25 0.018 152);
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
-  --accent: oklch(0.78 0.15 75); /* âmbar — único acento */
-  --accent-dim: oklch(0.78 0.15 75 / 35%);
-  --success: oklch(0.72 0.17 145); /* semântico: adquirido */
+  --accent: oklch(0.62 0.13 152); /* verde da parede — acento principal */
+  --accent-dim: oklch(0.62 0.13 152 / 35%);
+  --success: oklch(0.8 0.15 85); /* semântico: adquirido / investido */
   --destructive: oklch(0.704 0.191 22.216);
   --grid-line: oklch(1 0 0 / 3%);
   --radius: 0px;
+
+  /* parede da oficina: MDF branco sobre parede verde, como na foto de referência */
+  --wall: oklch(0.42 0.09 152);
+  --wall-deep: oklch(0.33 0.07 152);
+  --panel: oklch(0.95 0.005 120);
+  --panel-edge: oklch(0.86 0.01 120);
+  --panel-ink: oklch(0.18 0.01 260);
+  --panel-ink-soft: oklch(0.55 0.01 260);
+  --screw: oklch(0.72 0.01 120);
 }
 html.light {
-  --background: oklch(0.985 0 0);
+  --background: oklch(0.965 0.008 152);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
-  --card2: oklch(0.96 0 0);
+  --card2: oklch(0.96 0.006 152);
   --muted: oklch(0.92 0 0);
   --muted-foreground: oklch(0.45 0 0);
   --border: oklch(0 0 0 / 12%);
   --input: oklch(0 0 0 / 18%);
   --primary: oklch(0.205 0 0);
   --primary-foreground: oklch(0.985 0 0);
-  --accent: oklch(0.68 0.15 70);
-  --accent-dim: oklch(0.68 0.15 70 / 35%);
-  --success: oklch(0.55 0.17 145);
+  --accent: oklch(0.5 0.13 152);
+  --accent-dim: oklch(0.5 0.13 152 / 35%);
+  --success: oklch(0.62 0.14 75);
   --destructive: oklch(0.55 0.19 25);
   --grid-line: oklch(0 0 0 / 4%);
 }
@@ -437,50 +446,114 @@ footer.site span { font-family: var(--font-mono); font-size: 10px; letter-spacin
 .project-lead { font-size: 14px; color: var(--muted-foreground); margin: 0 0 24px; max-width: 78ch; line-height: 1.6; }
 .project-lead b { color: var(--foreground); font-weight: 700; }
 
-.wall { display: grid; gap: 0; border: 1px solid var(--border); }
-.panel {
-  display: grid;
-  grid-template-columns: 120px 1fr 150px;
+/* a parede: MDF branco sobre parede verde, painéis empilhados e canaleta de cabo */
+div.wall {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 20px;
-  text-align: left;
+  gap: 26px;
+  padding: 36px 24px;
+  background:
+    radial-gradient(120% 80% at 20% 0%, oklch(1 0 0 / 8%), transparent 60%),
+    linear-gradient(160deg, var(--wall), var(--wall-deep));
+  border: 1px solid var(--border);
+}
+.panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "left right" "info info";
+  align-items: center;
+  gap: 12px 20px;
   width: 100%;
-  padding: 20px 24px;
-  background: var(--card);
+  max-width: 640px;
+  padding: 22px 26px 18px;
+  background: linear-gradient(150deg, var(--panel), var(--panel-edge));
   border: none;
-  border-bottom: 1px solid var(--border);
-  color: inherit;
+  box-shadow: 0 14px 26px oklch(0 0 0 / 35%);
+  color: var(--panel-ink);
   cursor: pointer;
   font: inherit;
-  transition: background 0.2s, border-color 0.2s;
+  text-align: left;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
-.panel:last-child { border-bottom: none; }
-.panel:hover { background: var(--card2); }
-.panel:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-.panel .p-logo {
-  font-weight: 900;
-  font-size: clamp(22px, 3vw, 34px);
-  letter-spacing: 0.06em;
+.panel:hover { transform: translateY(-3px); box-shadow: 0 20px 34px oklch(0 0 0 / 45%); }
+.panel:focus-visible { outline: 3px solid var(--panel); outline-offset: 4px; }
+/* proporções da foto: cada geração ocupa um painel um pouco maior */
+.panel-ps1 { max-width: 560px; }
+.panel-ps2 { max-width: 600px; }
+.panel-ps3,
+.panel-ps4 { max-width: 640px; }
+/* canaleta que desce de um painel para o outro */
+.panel::after {
+  content: "";
+  position: absolute;
+  bottom: -26px;
+  right: 18%;
+  width: 3px;
+  height: 26px;
+  background: oklch(1 0 0 / 45%);
+}
+.panel:last-child::after { display: none; }
+
+.screw { position: absolute; width: 5px; height: 5px; background: var(--screw); box-shadow: inset 0 0 0 1px oklch(0 0 0 / 25%); }
+.screw.s-tl { top: 7px; left: 7px; }
+.screw.s-tr { top: 7px; right: 7px; }
+.screw.s-bl { bottom: 7px; left: 7px; }
+.screw.s-br { bottom: 7px; right: 7px; }
+
+.p-left { grid-area: left; display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.p-right { grid-area: right; display: flex; justify-content: center; align-items: center; min-height: 108px; }
+
+/* logo recortado */
+.ps-mark { width: 96px; height: 76px; color: var(--panel-ink); }
+.ps-mark-cut { fill: var(--panel); }
+.ps-mark-s { fill: var(--panel-ink-soft); }
+.ps-word {
+  font-family: var(--font-sans);
+  font-weight: 300;
+  font-size: 40px;
+  letter-spacing: 0.02em;
   line-height: 1;
-  color: var(--muted-foreground);
-  transition: color 0.2s;
+  transform: scaleY(1.35);
+  transform-origin: left center;
+  display: inline-block;
+  color: var(--panel-ink);
 }
-.panel:hover .p-logo { color: var(--accent); }
-.panel.owned .p-logo { color: var(--foreground); }
-.panel .p-body { display: block; }
-.panel .p-name { display: block; font-weight: 800; font-size: 16px; }
-.panel .p-note { display: block; font-size: 13px; color: var(--muted-foreground); margin-top: 4px; }
-.panel .p-foot { display: block; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted-foreground); margin-top: 8px; }
-.panel.owned .p-foot { color: var(--success); }
-/* silhueta do painel: console à direita, controle no suporte de baixo */
-.panel .p-slot { position: relative; display: block; height: 62px; border: 1px solid var(--border); background: var(--card2); }
-.panel .p-console { position: absolute; top: 9px; right: 10px; width: 52px; height: 26px; border: 1px solid var(--input); }
-.panel .p-pad { position: absolute; bottom: 9px; left: 12px; width: 26px; height: 14px; border: 1px solid var(--input); }
-.panel.owned .p-console,
-.panel.owned .p-pad { border-color: var(--success); }
-@media (max-width: 720px) {
-  .panel { grid-template-columns: 84px 1fr; }
-  .panel .p-slot { display: none; }
+
+/* console e controle montados */
+.art { display: block; }
+.art-svg { display: block; height: auto; }
+.art-ps1 .art-svg { width: 150px; }
+.art-ps2 .art-svg { width: 62px; }
+.art-ps3 .art-svg { width: 108px; }
+.art-ps4 .art-svg { width: 140px; }
+.art-body-1 { fill: oklch(0.78 0.01 100); }
+.art-body-2 { fill: oklch(0.24 0.01 260); }
+.art-face { fill: oklch(0.32 0.01 260); }
+.art-lid { fill: oklch(0.72 0.01 100); stroke: oklch(0.6 0.01 100); stroke-width: 1.5; }
+.art-hub { fill: oklch(0.62 0.01 100); }
+.art-btn { fill: oklch(0.62 0.01 100); }
+.art-line { fill: oklch(0.55 0.06 250); }
+
+.pad { position: relative; display: block; padding-bottom: 8px; }
+.pad-svg { width: 72px; height: auto; display: block; }
+.pad-body { fill: oklch(0.26 0.01 260); }
+.pad-dot { fill: oklch(0.5 0.01 260); }
+.pad-mount { position: absolute; left: 22px; bottom: 0; width: 30px; height: 4px; background: var(--panel-ink-soft); }
+.panel-ps1 .pad-body { fill: oklch(0.6 0.01 100); }
+
+.p-info { grid-area: info; display: block; border-top: 1px solid oklch(0 0 0 / 12%); padding-top: 12px; margin-top: 6px; }
+.p-info .p-name { display: block; font-weight: 800; font-size: 15px; color: var(--panel-ink); }
+.p-info .p-note { display: block; font-size: 12.5px; color: oklch(0.42 0.01 260); margin-top: 3px; line-height: 1.5; }
+.p-info .p-foot { display: block; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: oklch(0.5 0.01 260); margin-top: 8px; }
+.panel.owned .p-info .p-foot { color: oklch(0.42 0.13 152); font-weight: 700; }
+
+@media (max-width: 640px) {
+  .wall { padding: 24px 12px; }
+  .panel { padding: 18px 18px 14px; gap: 10px 12px; }
+  .ps-word { font-size: 30px; }
+  .art-ps1 .art-svg, .art-ps4 .art-svg { width: 108px; }
 }
 
 .mat { border: 1px solid var(--border); border-top: none; padding: 20px 24px; }
@@ -505,7 +578,7 @@ footer.site span { font-family: var(--font-mono); font-size: 10px; letter-spacin
 /* info extra nos cards e no modal */
 .card .games { font-size: 11px; color: var(--muted-foreground); margin: 12px 0 0; line-height: 1.5; }
 .card .games b { color: var(--accent); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; font-size: 10px; margin-right: 6px; }
-.tag.wall { border-color: var(--accent-dim); color: var(--accent); }
+.tag.panelmark { border-color: var(--accent-dim); color: var(--accent); }
 .dossier { border: 1px solid var(--border); margin-top: 20px; padding: 18px 20px; }
 .d-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; }
 .d-grid .k,
@@ -515,3 +588,34 @@ footer.site span { font-family: var(--font-mono); font-size: 10px; letter-spacin
 .d-games,
 .d-tip { font-size: 13px; color: var(--muted-foreground); margin: 16px 0 0; border-top: 1px solid var(--border); padding-top: 12px; line-height: 1.55; }
 .d-tip { color: var(--foreground); }
+
+/* ============ Linguagem da parede aplicada ao resto da plataforma ============ */
+/* superfícies viram "painéis": aresta clara em cima e parafuso nos quatro cantos */
+.card,
+.stat,
+.quest,
+.frame,
+.mat,
+.import-banner {
+  background-image:
+    radial-gradient(circle at 7px 7px, var(--accent-dim) 1.5px, transparent 1.6px),
+    radial-gradient(circle at calc(100% - 7px) 7px, var(--accent-dim) 1.5px, transparent 1.6px),
+    radial-gradient(circle at 7px calc(100% - 7px), var(--accent-dim) 1.5px, transparent 1.6px),
+    radial-gradient(circle at calc(100% - 7px) calc(100% - 7px), var(--accent-dim) 1.5px, transparent 1.6px);
+  background-repeat: no-repeat;
+}
+.card { box-shadow: inset 0 1px 0 oklch(1 0 0 / 6%); }
+.card:hover { box-shadow: inset 0 1px 0 oklch(1 0 0 / 12%); }
+
+/* títulos de seção com o letreiro fino e alongado dos painéis PS2/PS3/PS4 */
+.sec-head h2,
+.quest .q-title {
+  font-weight: 300;
+  letter-spacing: 0.34em;
+  font-size: 14px;
+}
+.sec-head h2 { transform: scaleY(1.18); transform-origin: left bottom; }
+
+/* marca do topo no mesmo desenho do logo recortado no MDF */
+.brand { text-shadow: 0 2px 0 oklch(0 0 0 / 25%); }
+.topbar .sys .dot { background: var(--accent); }

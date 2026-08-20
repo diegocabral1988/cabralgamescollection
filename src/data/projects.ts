@@ -11,15 +11,17 @@ export interface WallPanel {
   order: number;
   size: string;
   note: string;
+  /** Forma do console desenhada no painel. */
+  shape: "ps1" | "ps2" | "ps3" | "ps4";
 }
 
 /** Painéis da parede, de cima para baixo — como na foto de referência. */
 export const WALL: WallPanel[] = [
-  { consoleId: "ps1", label: "PS", order: 1, size: "60 × 30 cm", note: "Logo PlayStation clássico em preto + console cinza e controle digital." },
-  { consoleId: "ps2", label: "PS2", order: 2, size: "70 × 35 cm", note: "PS2 FAT na vertical com DualShock 2 no suporte inferior." },
-  { consoleId: "ps3", label: "PS3", order: 3, size: "80 × 40 cm", note: "PS3 Slim deitado — é o painel mais largo da sequência." },
-  { consoleId: "ps4", label: "PS4", order: 4, size: "80 × 40 cm", note: "PS4 FAT com DualShock 4; deixe folga para passar o cabo HDMI." },
-  { consoleId: "ps5", label: "PS5", order: 5, size: "90 × 45 cm", note: "Expansão futura da parede — o painel maior, embaixo ou ao lado." },
+  { consoleId: "ps1", shape: "ps1", label: "PS", order: 1, size: "60 × 30 cm", note: "Logo PlayStation clássico em preto + console cinza e controle digital." },
+  { consoleId: "ps2", shape: "ps2", label: "PS2", order: 2, size: "70 × 35 cm", note: "PS2 FAT na vertical com DualShock 2 no suporte inferior." },
+  { consoleId: "ps3", shape: "ps3", label: "PS3", order: 3, size: "80 × 40 cm", note: "PS3 Slim deitado — é o painel mais largo da sequência." },
+  { consoleId: "ps4", shape: "ps4", label: "PS4", order: 4, size: "80 × 40 cm", note: "PS4 FAT com DualShock 4; deixe folga para passar o cabo HDMI." },
+  { consoleId: "ps5", shape: "ps4", label: "PS5", order: 5, size: "90 × 45 cm", note: "Expansão futura da parede — o painel maior, embaixo ou ao lado." },
 ];
 
 /** Materiais e cuidados comuns a todos os painéis. */
