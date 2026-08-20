@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { CollectionState, DB } from "@/data/consoles";
 import { FRAMES, WALL, WALL_MATERIALS, framesBudgetLabel } from "@/data/projects";
 import { lotsTotal, pad } from "@/lib/collection";
+import { ConsoleArt, PadArt, PsMonogram, PsWordmark } from "./PsPanelArt";
 
 const FRAME_KEY = "cgc_frame_";
 
@@ -67,21 +68,30 @@ export default function ProjectBoard({
           return (
             <button
               key={p.consoleId}
-              className={`panel${owned ? " owned" : ""}`}
+              className={`panel panel-${p.shape}${owned ? " owned" : ""}`}
               onClick={() => onOpen(p.consoleId)}
               aria-label={`Painel ${p.label} — ${c?.name ?? p.consoleId}`}
             >
-              <span className="p-logo">{p.label}</span>
-              <span className="p-body">
+              {/* parafusos dos quatro cantos, como no painel de MDF real */}
+              <i className="screw s-tl" aria-hidden="true" />
+              <i className="screw s-tr" aria-hidden="true" />
+              <i className="screw s-bl" aria-hidden="true" />
+              <i className="screw s-br" aria-hidden="true" />
+
+              <span className="p-left">
+                {p.label === "PS" ? <PsMonogram /> : <PsWordmark label={p.label} />}
+                <PadArt />
+              </span>
+              <span className="p-right">
+                <ConsoleArt shape={p.shape} />
+              </span>
+
+              <span className="p-info">
                 <span className="p-name">{c?.name ?? p.consoleId}</span>
                 <span className="p-note">{p.note}</span>
                 <span className="p-foot mono">
                   {p.size} · {c?.year ?? "—"} · {owned ? "CONSOLE EM CASA" : "A ADQUIRIR"}
                 </span>
-              </span>
-              <span className="p-slot" aria-hidden="true">
-                <i className="p-console" />
-                <i className="p-pad" />
               </span>
             </button>
           );
