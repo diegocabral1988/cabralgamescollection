@@ -199,6 +199,7 @@ export default function CollectionApp() {
     const txt = filters.search.toLowerCase();
     return DB.filter((c) => {
       if (filters.brand !== "all" && c.brand !== filters.brand) return false;
+      if (filters.family !== "all" && c.family !== filters.family) return false;
       if (filters.decade !== "all" && Math.floor(c.year / 10) * 10 !== +filters.decade) return false;
       if (filters.type !== "all" && c.type !== filters.type) return false;
       if (txt && !(c.name + c.brand + c.desc).toLowerCase().includes(txt)) return false;

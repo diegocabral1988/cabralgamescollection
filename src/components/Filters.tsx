@@ -5,6 +5,7 @@ import { DB } from "@/data/consoles";
 export interface FilterState {
   search: string;
   brand: string;
+  family: string;
   decade: string;
   type: string;
   status: string;
@@ -13,6 +14,7 @@ export interface FilterState {
 export const initialFilters: FilterState = {
   search: "",
   brand: "all",
+  family: "all",
   decade: "all",
   type: "all",
   status: "all",
@@ -26,6 +28,10 @@ export default function Filters({
   onChange: (f: FilterState) => void;
 }) {
   const brands = [...new Set(DB.map((c) => c.brand))].sort();
+  // só famílias com mais de um modelo — as linhagens que se dividem em variantes
+  const counts = new Map<string, number>();
+  DB.forEach((c) => c.family && counts.set(c.family, (counts.get(c.family) ?? 0) + 1));
+  const families = [...counts.entries()].filter(([, n]) => n > 1).map(([f]) => f).sort();
   const set = (k: keyof FilterState) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
     onChange({ ...filters, [k]: e.target.value });
 
@@ -46,6 +52,14 @@ export default function Filters({
           </option>
         ))}
       </select>
+      <select aria-label="Família" value={filters.family} onChange={set("family")}>
+        <option value="all">Todas as famílias</option>
+        {families.map((f) => (
+          <option key={f} value={f}>
+            {f}
+          </option>
+        ))}
+      </select>
       <select aria-label="Década" value={filters.decade} onChange={set("decade")}>
         <option value="all">Todas as décadas</option>
         <option value="1970">Anos 1970</option>
@@ -60,7 +74,7 @@ export default function Filters({
         <option value="Mesa">Console de mesa</option>
         <option value="Portátil">Portátil</option>
         <option value="Add-on">Add-on / Periférico</option>
-        <option value="Híbrido">Micro/Híbrido</option>
+        <option value="Híbrido">Híbrido (mesa + portátil)</option>
       </select>
       <select aria-label="Status" value={filters.status} onChange={set("status")}>
         <option value="all">Qualquer status</option>

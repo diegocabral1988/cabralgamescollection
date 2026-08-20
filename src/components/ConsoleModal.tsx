@@ -62,7 +62,7 @@ export default function ConsoleModal({
         </p>
         <p className="lore">{c.desc}</p>
 
-        {(c.gen || c.units || c.games || c.tip || c.wall) && (
+        {(c.gen || c.units || c.games || c.tip || c.wall || c.family) && (
           <div className="dossier">
             <div className="d-grid">
               {c.gen && (
@@ -75,6 +75,12 @@ export default function ConsoleModal({
                 <div>
                   <span className="k">Unidades vendidas</span>
                   <span className="v">{c.units}</span>
+                </div>
+              )}
+              {c.family && (
+                <div>
+                  <span className="k">Família</span>
+                  <span className="v">{c.family}</span>
                 </div>
               )}
               <div>
