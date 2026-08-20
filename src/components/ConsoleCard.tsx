@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { CollectionState, DB, GameConsole } from "@/data/consoles";
 import { accProgress, fmt, lotsTotal, pad, quoteOf } from "@/lib/collection";
+import BrandLogo from "./BrandLogo";
 
 export default function ConsoleCard({
   c,
@@ -52,6 +53,7 @@ export default function ConsoleCard({
       onClick={() => onOpen(c.id)}
     >
       <span className="idx">{pad(index + 1)}</span>
+      <BrandLogo brand={c.brand} />
       <h3>{c.name}</h3>
       <p className="meta">
         {c.brand} · {c.year}

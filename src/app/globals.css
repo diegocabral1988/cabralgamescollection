@@ -62,6 +62,7 @@ html.light {
   --color-destructive: var(--destructive);
   --radius: 0px;
   --font-sans: "Figtree Variable", "Figtree", sans-serif;
+  --font-display: "Chakra Petch", "Figtree Variable", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 }
 
@@ -674,3 +675,108 @@ html.light .bg-symbols { filter: invert(1); opacity: 0.28; }
 @keyframes symbol-drift { to { background-position: 192px 192px; } }
 @media (prefers-reduced-motion: reduce) { .bg-symbols { animation: none; } }
 .tag.fam { border-color: var(--input); color: var(--muted-foreground); }
+
+/* ============ Visão geral: patente, números, constelação e conquistas ============ */
+.overview { margin-bottom: 56px; }
+.ov-top {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-top: none;
+}
+.ov-rank { padding: 28px; border-right: 1px solid var(--border); background: linear-gradient(160deg, var(--card), transparent 70%); }
+.rank-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(20px, 2.2vw, 27px);
+  line-height: 1.15;
+  margin: 10px 0 0;
+  letter-spacing: 0.01em;
+}
+.rank-line { display: flex; justify-content: space-between; align-items: baseline; margin-top: 14px; }
+.rank-line .lvl { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: 0.22em; color: var(--accent); }
+.rank-line .xp { font-size: 12px; color: var(--muted-foreground); }
+.xpbar { height: 6px; background: var(--muted); margin-top: 10px; position: relative; overflow: hidden; }
+.xpbar i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--success));
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.rank-next { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-foreground); margin: 10px 0 0; }
+
+.ov-figures { display: grid; grid-template-columns: repeat(4, 1fr); margin: 0; }
+.ov-figures > div { padding: 20px 22px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.ov-figures > div:nth-child(4n) { border-right: none; }
+.ov-figures > div:nth-child(n + 5) { border-bottom: none; }
+.ov-figures dt { font-size: 10px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--muted-foreground); font-weight: 600; }
+.ov-figures dd {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(18px, 2vw, 26px);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.ov-figures dd small { display: block; font-family: var(--font-mono); font-size: 10px; font-weight: 400; letter-spacing: 0.1em; color: var(--muted-foreground); margin-top: 4px; }
+.ov-figures dd.ok { color: var(--success); }
+.ov-figures dd.acc { color: var(--accent); }
+@media (max-width: 900px) {
+  .ov-top { grid-template-columns: 1fr; }
+  .ov-rank { border-right: none; border-bottom: 1px solid var(--border); }
+  .ov-figures { grid-template-columns: repeat(2, 1fr); }
+  .ov-figures > div:nth-child(2n) { border-right: none; }
+  .ov-figures > div:nth-child(n + 5) { border-bottom: 1px solid var(--border); }
+}
+
+/* a constelação: linha do tempo viva do acervo */
+.constellation { position: relative; border: 1px solid var(--border); border-top: none; background: linear-gradient(180deg, oklch(0 0 0 / 18%), transparent); }
+.constellation canvas { display: block; width: 100%; height: 230px; }
+.const-scale { display: flex; justify-content: space-between; padding: 0 26px 8px; font-size: 10px; letter-spacing: 0.15em; color: var(--muted-foreground); }
+.const-legend { display: flex; flex-wrap: wrap; gap: 18px; margin: 0; padding: 12px 26px 16px; border-top: 1px solid var(--border); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-foreground); }
+.const-legend .lg { display: inline-flex; align-items: center; gap: 7px; }
+.const-legend .lg::before { content: ""; width: 8px; height: 8px; display: inline-block; }
+.const-legend .own::before { background: var(--success); }
+.const-legend .quo::before { border: 1px solid var(--accent); }
+.const-legend .none::before { background: var(--accent); opacity: 0.4; width: 4px; height: 4px; }
+.const-legend .line::before { width: 18px; height: 1px; background: var(--accent); opacity: 0.6; }
+
+/* conquistas */
+.ov-goals { border: 1px solid var(--border); border-top: none; }
+.goals-head { display: flex; justify-content: space-between; align-items: baseline; padding: 18px 24px 0; }
+.goals-head h3 { font-family: var(--font-display); font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase; margin: 0; font-weight: 700; }
+.goals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; padding: 16px 0 0; }
+.goal { padding: 0 24px 22px; border-right: 1px solid var(--border); }
+.goal:last-child { border-right: none; }
+.goal h4 { font-family: var(--font-display); font-size: 15px; margin: 0; font-weight: 600; }
+.goal p { font-size: 13px; color: var(--muted-foreground); margin: 4px 0 12px; line-height: 1.5; }
+.goal-bar { height: 3px; background: var(--muted); }
+.goal-bar i { display: block; height: 100%; background: var(--accent); transition: width 0.6s ease; }
+.goal-foot { display: block; font-size: 10px; letter-spacing: 0.14em; color: var(--muted-foreground); margin-top: 8px; }
+.goal-empty { padding: 0 24px 22px; color: var(--success); }
+@media (max-width: 860px) { .goals { grid-template-columns: 1fr; } .goal { border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 18px; } }
+
+/* faixa de fabricantes */
+.ov-brands { border: 1px solid var(--border); border-top: none; padding: 20px 24px 22px; }
+.brand-strip { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+.brand-chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--border); padding: 8px 12px; transition: border-color 0.2s, background 0.2s; }
+.brand-chip:hover { border-color: currentColor; background: var(--card); }
+.brand-count { font-size: 10px; color: var(--muted-foreground); }
+
+/* marcas dos fabricantes */
+.brand-logo { display: block; }
+.brand-logo.brand-sm { width: 78px; height: 26px; margin-bottom: 10px; opacity: 0.85; }
+.brand-logo.brand-md { width: 96px; height: 32px; }
+.brand-text {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  fill: currentColor;
+}
+.card:hover .brand-logo { opacity: 1; }
+
+/* títulos e números na face de display */
+.brand, .sec-head h2, .q-title, .modal h2, .card h3, .stat .num, .p-info .p-name, .frame h3 { font-family: var(--font-display); }
+.brand { letter-spacing: 0.24em; }
